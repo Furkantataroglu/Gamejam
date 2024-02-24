@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
         pivot.Rotate(0,horizontal,0);
         //get the Y position of the mouse and rotate the pivot
         float vertical = Input.GetAxis("Mouse Y")* rotateSpeed;
-        //pivot.Rotate(-vertical,0,0);
+        pivot.Rotate(-vertical,0,0);
 
         //camera rotation limit/up down
         if(pivot.rotation.eulerAngles.x >maxViewAngel && pivot.rotation.eulerAngles.x <180f)
