@@ -245,7 +245,6 @@ GameObject:
   - component: {fileID: 592549063}
   - component: {fileID: 592549062}
   - component: {fileID: 592549061}
-  - component: {fileID: 592549060}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -268,25 +267,6 @@ Transform:
   m_Father: {fileID: 1382956850}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -26.1, y: 0, z: 0}
---- !u!114 &592549060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 592549058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1ddeb35634f704eb233db654a8ac65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  YellowM: {fileID: 2100000, guid: 908b50727c653b24a91821e97ab0d9ff, type: 2}
-  RedM: {fileID: 2100000, guid: 26cd077a34f53174d9ef31416f7d8aa3, type: 2}
-  OrengeM: {fileID: 2100000, guid: c84aba473f7b87d408f63cb6465a78eb, type: 2}
-  GreenM: {fileID: 2100000, guid: 4fae27ad6cb076541b53cac433555c57, type: 2}
-  BlueM: {fileID: 2100000, guid: 1670b50f71aced643a82bb3e0655a8bd, type: 2}
-  DefaultM: {fileID: 2100000, guid: 9d4d3f49748f36943a65343410a269d8, type: 2}
-  color: 6
 --- !u!136 &592549061
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -330,7 +310,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9d4d3f49748f36943a65343410a269d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -626,6 +606,7 @@ MonoBehaviour:
   _playerSpeed: 5
   _rotationSpeed: 10
   _followCamera: {fileID: 939605}
+  _groundedPlayer: 0
   _jumpHeight: 2
   _gravityValue: -9.81
 --- !u!143 &1639324848
@@ -862,7 +843,7 @@ MonoBehaviour:
   GreenM: {fileID: 2100000, guid: 4fae27ad6cb076541b53cac433555c57, type: 2}
   BlueM: {fileID: 2100000, guid: 1670b50f71aced643a82bb3e0655a8bd, type: 2}
   DefaultM: {fileID: 2100000, guid: 9d4d3f49748f36943a65343410a269d8, type: 2}
-  color: 0
+  color: 6
 --- !u!135 &2012261729
 SphereCollider:
   m_ObjectHideFlags: 0

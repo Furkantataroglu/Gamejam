@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private Camera _followCamera;
 
     private Vector3 _playerVelocity;
-    private bool _groundedPlayer;
+    public bool _groundedPlayer;
 
     [SerializeField]
     public float _jumpHeight;

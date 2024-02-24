@@ -31,7 +31,7 @@ public class ColorChanges : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1)&&PlayerController.Intante2._groundedPlayer)
         {
             GetComponent<Renderer>().material = YellowM;
             color = 1;
