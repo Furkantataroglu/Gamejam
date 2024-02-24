@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController Intante2;
     private CharacterController _controller;
 
+
     [SerializeField]
-    private float _playerSpeed = 5f;
+    public float _playerSpeed;
 
     [SerializeField]
     private float _rotationSpeed = 10f;
@@ -19,10 +22,13 @@ public class PlayerController : MonoBehaviour
     private bool _groundedPlayer;
 
     [SerializeField]
-    private float _jumpHeight = 1.0f;
+    public float _jumpHeight;
     [SerializeField]
     private float _gravityValue = -9.81f;
-
+    private void Awake()
+    {
+        Intante2 = this;
+    }
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
