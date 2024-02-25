@@ -2,47 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveAroundObject : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
-    [SerializeField]
-    private float _mouseSensitivity = 3.0f;
-
-    private float _rotationY;
-    private float _rotationX;
-
-    [SerializeField]
-    private Transform _target;
-
-    [SerializeField]
-    private float _distanceFromTarget = 3.0f;
-
-    private Vector3 _currentRotation;
-    private Vector3 _smoothVelocity = Vector3.zero;
-
-    [SerializeField]
-    private float _smoothTime = 0.2f;
-
-    [SerializeField]
-    private Vector2 _rotationXMinMax = new Vector2(-40, 40);
-
-    void Update()
+    // Start is called before the first frame update
+    public Transform target;
+    public Vector3 offset;
+    public bool useOffsetValues;
+    public float rotateSpeed;
+    public Transform pivot;
+    void Start()
     {
-        float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity;
-        float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity;
+        if(!useOffsetValues)
+        {
+            offset=target.position - transform.position;
+        }
+       pivot.transform.position = target.transform.position;
+       pivot.transform.parent = target.transform;
+        //mouse gizleme
+       Cursor.lockState = CursorLockMode.Locked;
+    }
 
-        _rotationY += mouseX;
-        _rotationX += mouseY;
+    // Update is called once per frame
+    void LateUpdate()
+    {   //get the x position of the mouse and rotate the target
+        float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
+        target.Rotate(0,horizontal,0);
+        //get the Y position of the mouse and rotate the pivot
+        float vertical = Input.GetAxis("Mouse Y")* rotateSpeed;
+        pivot.Rotate(-vertical,0,0);
+        //move the camera based on the current rotation of the target and original offset
+        float desiredYAngle = target.eulerAngles.y;
+        float desiredXAngle = pivot.eulerAngles.x;
+        
+        Quaternion rotation = Quaternion.Euler(desiredXAngle, desiredYAngle,0);
+        transform.position=target.position-(rotation*offset);
 
-        // Apply clamping for x rotation 
-        _rotationX = Mathf.Clamp(_rotationX, _rotationXMinMax.x, _rotationXMinMax.y);
 
-        Vector3 nextRotation = new Vector3(_rotationX, _rotationY);
+        if(transform.position.y < target.position.y)
+        {
+            transform.position = new Vector3(transform.position.x , target.position.y -0.5f,transform.position.z);
+        }
+        
+        //transform.position = target.position  - offset;
+        transform.LookAt(target.transform);
 
-        // Apply damping between rotation changes
-        _currentRotation = Vector3.SmoothDamp(_currentRotation, nextRotation, ref _smoothVelocity, _smoothTime);
-        transform.localEulerAngles = _currentRotation;
-
-        // Substract forward vector of the GameObject to point its forward vector to the target
-        transform.position = _target.position - transform.forward * _distanceFromTarget;
+        
     }
 }
