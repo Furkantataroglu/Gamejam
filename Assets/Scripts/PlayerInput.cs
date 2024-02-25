@@ -44,7 +44,7 @@ public class PlayerInput : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
         MyInput();
         SpeedControl();
-
+       
         if (grounded)
             rb.drag = groundDrag;
         else
