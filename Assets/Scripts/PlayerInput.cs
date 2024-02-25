@@ -31,6 +31,11 @@ public class PlayerInput : MonoBehaviour
     float verticalInput;
     Vector3 moveDirection;
     Rigidbody rb;
+      [SerializeField]
+    private Camera _followCamera;
+     [SerializeField]
+    private float _rotationSpeed = 10f;
+    
 
     private void Start()
     {
@@ -49,6 +54,8 @@ public class PlayerInput : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+           
     }
 
     private void FixedUpdate()
@@ -63,6 +70,19 @@ public class PlayerInput : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+       /* Vector3 direction = new Vector3(horizontalInput,0f,verticalInput).normalized;
+        if(direction.magnitude>=0.1f)
+        {
+            float targetA
+        }*/
+        Vector3 movementInput = Quaternion.Euler(0, _followCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+        Vector3 movementDirection = movementInput.normalized;
+           if (movementDirection != Vector3.zero)
+        {
+            Quaternion desiredRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, _rotationSpeed * Time.deltaTime);
+        }
         if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;

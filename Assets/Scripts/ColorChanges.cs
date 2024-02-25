@@ -42,33 +42,35 @@ public class ColorChanges : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if (Input.GetKeyDown(KeyCode.Alpha1))
+       if (Input.GetKey(KeyCode.LeftShift))
         {
-            ability1Active = !ability1Active;
-            ability2Active = false;
+            ability1Active = true;
+            
             if (ability1Active)
             {
                 // Enable Ability 1
                 IncreaseSpeed(GetComponent<PlayerInput>()); // PlayerInput componentini al);          
                 Debug.Log("Ability 1");
             }
-            else
-            {
-                // Disable Ability 1
-                DecreaseSpeed(GetComponent<PlayerInput>());
-                Debug.Log("Default State");
-            }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        else{
+            ability1Active=false;
+            DecreaseSpeed(GetComponent<PlayerInput>());
+            
+                Debug.Log("Default State");
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ability2Active = !ability2Active;
-            ability1Active = false;
+            
             if (ability2Active)
             {
                 // Enable Ability 2
                 IncreaseJumpForce();
                
                 Debug.Log("Ability 2");
+                WaterWalk.shield = false;
             }
             else
             {
@@ -77,14 +79,15 @@ public class ColorChanges : MonoBehaviour
                 Debug.Log("Default State");
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            ability3Active = !ability3Active;
+           ability3Active = !ability3Active;
             if (ability3Active)
             {
                 // Enable Ability 3
                 WaterWalk.shield = true;
                 Debug.Log("Ability 3");
+                ability2Active=false;
             }
             else
             {
@@ -96,10 +99,10 @@ public class ColorChanges : MonoBehaviour
     }
      private void IncreaseSpeed(PlayerInput playerInput)
     {
-        playerInput.jumpForce = originaljumpForce;
+        //playerInput.jumpForce = originaljumpForce;
         if (playerInput != null)
         {
-            playerInput.moveSpeed *= speedMultiplier; // Hızı çarpanla çarp
+            playerInput.moveSpeed = speedMultiplier* originalMoveSpeed; // Hızı çarpanla çarp
             Debug.Log("New Speed: " + playerInput.moveSpeed); // Yeni hızı konsola yazdır
         }
     }
@@ -109,7 +112,7 @@ public class ColorChanges : MonoBehaviour
 
         if (playerInput != null)
         {
-            playerInput.moveSpeed /= speedMultiplier; // Hızı çarpanla çarp
+            playerInput.moveSpeed = originalMoveSpeed; // Hızı çarpanla çarp
             Debug.Log("New Speed: " + playerInput.moveSpeed); // Yeni hızı konsola yazdır
         }
     }
@@ -121,7 +124,7 @@ public class ColorChanges : MonoBehaviour
 
         if (playerInput != null)
         {
-            playerInput.jumpForce *= jumpForceMultiplier; // Zıplama kuvvetini çarpanla çarp
+            playerInput.jumpForce = originaljumpForce * jumpForceMultiplier; // Zıplama kuvvetini çarpanla çarp
             Debug.Log("New Jump Force: " + playerInput.jumpForce); // Yeni zıplama kuvvetini konsola yazdır
         }
     }
@@ -131,7 +134,7 @@ public class ColorChanges : MonoBehaviour
 
         if (playerInput != null)
         {
-            playerInput.jumpForce /= jumpForceMultiplier; // Zıplama kuvvetini çarpanla çarp
+            playerInput.jumpForce =originaljumpForce; // Zıplama kuvvetini çarpanla çarp
             Debug.Log("New Jump Force: " + playerInput.jumpForce); // Yeni zıplama kuvvetini konsola yazdır
         }
     }
