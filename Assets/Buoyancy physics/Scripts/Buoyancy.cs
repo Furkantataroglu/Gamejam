@@ -33,8 +33,7 @@ public class Buoyancy : MonoBehaviour {
     {
         if (triggered && currentWaterTransform)
         {
-            if (!WaterWalk.shield)
-            {
+            
                 Vector3 point = transform.position + transform.TransformDirection(center);
                 float buoyancyPoint = currentWaterTransform.transform.localScale.y;
 
@@ -56,7 +55,7 @@ public class Buoyancy : MonoBehaviour {
                     Vector3 buoyancy = -Physics.gravity * (force - GetComponent<Rigidbody>().velocity.y * damper);
                     GetComponent<Rigidbody>().AddForceAtPosition(buoyancy, point);
                 }
-            }
+            
         }
 
     }
@@ -64,27 +63,25 @@ public class Buoyancy : MonoBehaviour {
     //On trigger enter check if the collider is water, then, activate physics simulation
     void OnTriggerStay(Collider collider)
     {
-        if (!WaterWalk.shield)
+
+        if (!currentWaterTransform && (collider.tag == "Water" || collider.name == "Water"))
         {
-            if (!currentWaterTransform && (collider.tag == "Water" || collider.name == "Water"))
-            {
-                currentWaterTransform = collider.transform;
-                triggered = true;
-            }
+            currentWaterTransform = collider.transform;
+            triggered = true;
         }
+
     }
 
     //Only deactivate physics on trigger exit and only if the trigger is the same than the current water's collider
     void OnTriggerExit(Collider collider)
     {
-        if (!WaterWalk.shield)
-        {
+       
             if (currentWaterTransform && collider == currentWaterTransform.GetComponent<Collider>())
             {
                 triggered = false;
                 currentWaterTransform = null;
             }
-        }
+        
     }
 
 }
