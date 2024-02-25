@@ -17,13 +17,11 @@ public class Buoyancy : MonoBehaviour {
     public float sinking = 0.6f;
     public Vector3 centerOfMass;
 
-    [SerializeField]
-    public bool swim = false;
 
     //Configurate center of mass or custom center of mass
     void Start()
-    {   
-        if (swim)
+    {
+        if (!WaterWalk.shield)
         {
             GetComponent<Rigidbody>().centerOfMass = centerOfMass;
             center = -centerOfMass;
@@ -33,9 +31,9 @@ public class Buoyancy : MonoBehaviour {
     //Fixed update is only used to simulate physics, if you modify this script, use Update instead
     void FixedUpdate()
     {
-        if (swim)
+        if (triggered && currentWaterTransform)
         {
-            if (triggered && currentWaterTransform)
+            if (!WaterWalk.shield)
             {
                 Vector3 point = transform.position + transform.TransformDirection(center);
                 float buoyancyPoint = currentWaterTransform.transform.localScale.y;
@@ -58,15 +56,15 @@ public class Buoyancy : MonoBehaviour {
                     Vector3 buoyancy = -Physics.gravity * (force - GetComponent<Rigidbody>().velocity.y * damper);
                     GetComponent<Rigidbody>().AddForceAtPosition(buoyancy, point);
                 }
-
             }
         }
+
     }
 
     //On trigger enter check if the collider is water, then, activate physics simulation
-    void OnTriggerStay (Collider collider) 
+    void OnTriggerStay(Collider collider)
     {
-        if (swim)
+        if (!WaterWalk.shield)
         {
             if (!currentWaterTransform && (collider.tag == "Water" || collider.name == "Water"))
             {
@@ -79,7 +77,7 @@ public class Buoyancy : MonoBehaviour {
     //Only deactivate physics on trigger exit and only if the trigger is the same than the current water's collider
     void OnTriggerExit(Collider collider)
     {
-        if (swim)
+        if (!WaterWalk.shield)
         {
             if (currentWaterTransform && collider == currentWaterTransform.GetComponent<Collider>())
             {

@@ -83,12 +83,13 @@ public class ColorChanges : MonoBehaviour
             if (ability3Active)
             {
                 // Enable Ability 3
-
+                WaterWalk.shield = true;
                 Debug.Log("Ability 3");
             }
             else
             {
                 // Disable Ability 3
+                WaterWalk.shield = false;
                 Debug.Log("Default State");
             }
         }
